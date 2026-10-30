@@ -2,7 +2,7 @@
 ; 用 Inno Setup 6 编译：ISCC.exe QoneSecurity.iss
 
 #define AppName "Qone Security"
-#define AppVersion "1.4.0.0"
+#define AppVersion "1.4.1.0"
 #define AppPublisher "Sun2530"
 #define AppExeName "Qone Security.exe"
 #define AppURL "https://github.com/Sun2530/Qone-Security"
