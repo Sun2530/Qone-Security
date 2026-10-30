@@ -105,8 +105,21 @@ chickguard/
 
 ---
 
+## 致谢
+
+本项目基于以下开源组件构建，感谢这些项目与作者：
+
+- [YARA](https://virustotal.github.io/yara/) — BSD 3-Clause
+- [yara-python](https://github.com/VirusTotal/yara-python) — Apache License 2.0
+- [pefile](https://github.com/erocarrera/pefile) — MIT
+- [pywebview](https://pywebview.flowrl.com/) — BSD 3-Clause
+- [PyInstaller](https://pyinstaller.org/) — GPLv2-or-later（附例外）
+- [CPython](https://www.python.org/) — PSF License
+
+各组件完整的版权声明、许可证全文与分发边界，见 [THIRD-PARTY-NOTICES.md](THIRD-PARTY-NOTICES.md)。
+
+---
+
 ## 许可证
 
 [MIT](LICENSE) · Copyright (c) 2026 Sun2530
-
-第三方组件的许可与边界说明见 [THIRD-PARTY-NOTICES.md](THIRD-PARTY-NOTICES.md)。
