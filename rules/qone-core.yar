@@ -184,15 +184,19 @@ rule Worm_Panda_Burning_Incense
     strings:
         $xboy  = "xboy" nocase
         $whboy = "whboy" nocase
-        /* 变异版在文件里写的中文标志，原样匹配 */
-        $cn1 = "武汉男生" ascii
-        $cn2 = "感染下载者" ascii
+        /* 「武汉男生」「感染下载者」在样本里是 GBK（ANSI）编码，YARA 的
+           中文直写默认按 UTF-8 匹配，老样本对不上。这里用十六进制字节序列
+           同时覆盖 GBK 与 UTF-8 两种编码，避免漏报。 */
+        $cn1 = { CE E4 BA BA C4 D0 C9 FA }                    // 武汉男生 GBK
+        $cn2 = { B8 D0 C8 BE CF C2 D4 D8 D5 DF }              // 感染下载者 GBK
+        $cn3 = { E6 AD A6 E6 B1 89 E7 94 B7 E7 94 9F }        // 武汉男生 UTF-8
+        $cn4 = { E6 84 9F E6 9F 93 E4 B8 8B E8 BD BD E8 80 85 } // 感染下载者 UTF-8
         $fj   = "fujack" nocase
     condition:
         uint16(0) == 0x5A4D and
         filesize < 15MB and
         (
-            (any of ($xboy, $whboy) and any of ($cn1, $cn2)) or
+            (any of ($xboy, $whboy) and any of ($cn1, $cn2, $cn3, $cn4)) or
             $fj
         )
 }
