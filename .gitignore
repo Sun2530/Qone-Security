@@ -1,0 +1,20 @@
+# 构建产物
+build/
+build_tmp/
+dist/
+*.pyc
+__pycache__/
+
+# 界面的历史版本（自己回滚用，不进仓库）
+index.v*.html
+index.orb-ball.html
+
+# 打包中间文件
+*.toc
+*.pkg
+
+# 预览截图（自己看的，不进仓库）
+preview/
+
+# 本地配置残留
+*.log

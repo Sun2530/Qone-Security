@@ -1,0 +1,8 @@
+# Qone Security 内置哈希库
+# 格式：<摘要><TAB><名称>      # 开头为注释
+# 这里只放可自由分发的样本摘要（EICAR 是公开的反病毒测试文件，不是恶意代码）。
+# 真实样本摘要不随程序分发：abuse.ch 的 MalwareBazaar 并非 CC0，
+# 转存其数据违反它的使用条款。请在设置页用自己的 Auth-Key 同步，或用它导出的 CSV 导入。
+275a021bbfb6489e54d471899f7db9d1663fc695ec2fe2a2c4538aabf651fd0f	EICAR-Test-File
+44d88612fea8a8f36de82e1278abb02f	EICAR-Test-File
+3395856ce81f2b7382dee72602f798b642f14140	EICAR-Test-File

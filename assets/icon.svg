@@ -1,0 +1,91 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0.6" y2="1">
+      <stop offset="0" stop-color="#DCF1FD"/>
+      <stop offset="0.48" stop-color="#B6E0F6"/>
+      <stop offset="1" stop-color="#8AC9E9"/>
+    </linearGradient>
+    <radialGradient id="bgGlow" cx="0.5" cy="0.28" r="0.62">
+      <stop offset="0" stop-color="#FFFFFF" stop-opacity="0.55"/>
+      <stop offset="0.6" stop-color="#FFFFFF" stop-opacity="0.10"/>
+      <stop offset="1" stop-color="#FFFFFF" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="chick" cx="0.42" cy="0.26" r="0.86">
+      <stop offset="0" stop-color="#FFF0B8"/>
+      <stop offset="0.42" stop-color="#FFE077"/>
+      <stop offset="1" stop-color="#F5BA3F"/>
+    </radialGradient>
+    <linearGradient id="shell" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FFFFFF"/>
+      <stop offset="1" stop-color="#E8EEF2"/>
+    </linearGradient>
+    <radialGradient id="shellShade" cx="0.5" cy="0" r="1">
+      <stop offset="0" stop-color="#6C8CA0" stop-opacity="0.22"/>
+      <stop offset="1" stop-color="#6C8CA0" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="soft" x="-30%" y="-30%" width="160%" height="160%">
+      <feDropShadow dx="0" dy="9" stdDeviation="12" flood-color="#1F5C7D" flood-opacity="0.28"/>
+    </filter>
+    <filter id="shellShadow" x="-30%" y="-30%" width="160%" height="160%">
+      <feDropShadow dx="0" dy="7" stdDeviation="9" flood-color="#2A6B8C" flood-opacity="0.22"/>
+    </filter>
+    <clipPath id="shellClip">
+      <path d="M116 350 L152 324 L190 350 L228 324 L256 350 L288 324 L324 350 L362 324 L398 350
+               C398 404 340 428 256 428 C172 428 116 404 116 350 Z"/>
+    </clipPath>
+  </defs>
+
+  <!-- 圆角方底 -->
+  <rect x="0" y="0" width="512" height="512" rx="116" fill="url(#bg)"/>
+  <rect x="0" y="0" width="512" height="512" rx="116" fill="url(#bgGlow)"/>
+
+  <!-- 背景细环 -->
+  <circle cx="256" cy="238" r="176" fill="none" stroke="#FFFFFF" stroke-opacity="0.42" stroke-width="2"/>
+  <circle cx="256" cy="238" r="206" fill="none" stroke="#FFFFFF" stroke-opacity="0.26" stroke-width="2"/>
+
+  <!-- 小鸡身体 -->
+  <g filter="url(#soft)">
+    <ellipse cx="256" cy="272" rx="114" ry="120" fill="url(#chick)"/>
+  </g>
+
+  <!-- 呆毛 -->
+  <g stroke="#E8A93C" stroke-width="9.5" stroke-linecap="round" fill="none">
+    <path d="M250 160 C 236 149, 227 137, 224 123"/>
+    <path d="M259 156 C 262 134, 268 119, 281 111"/>
+    <path d="M269 162 C 281 157, 290 149, 295 139"/>
+  </g>
+
+  <!-- 翅膀 -->
+  <ellipse cx="140" cy="308" rx="17" ry="25" fill="#FBCF5E" transform="rotate(-12 140 308)"/>
+  <ellipse cx="372" cy="308" rx="17" ry="25" fill="#FBCF5E" transform="rotate(12 372 308)"/>
+
+  <!-- 腮红 -->
+  <ellipse cx="192" cy="290" rx="20" ry="12" fill="#FF9880" opacity="0.48"/>
+  <ellipse cx="320" cy="290" rx="20" ry="12" fill="#FF9880" opacity="0.48"/>
+
+  <!-- 眼睛 -->
+  <ellipse cx="215" cy="252" rx="16" ry="18.5" fill="#2A2018"/>
+  <ellipse cx="297" cy="252" rx="16" ry="18.5" fill="#2A2018"/>
+  <circle cx="209" cy="245" r="5.6" fill="#FFFFFF" opacity="0.95"/>
+  <circle cx="291" cy="245" r="5.6" fill="#FFFFFF" opacity="0.95"/>
+  <circle cx="220" cy="260" r="2.4" fill="#FFFFFF" opacity="0.55"/>
+  <circle cx="302" cy="260" r="2.4" fill="#FFFFFF" opacity="0.55"/>
+
+  <!-- 喙 -->
+  <path d="M256 274 L279 290 L256 307 L233 290 Z" fill="#F2A03D" stroke="#F2A03D"
+        stroke-width="9" stroke-linejoin="round"/>
+  <path d="M256 279 L269 288 L256 288 Z" fill="#FFC372" opacity="0.9"/>
+
+  <!-- 蛋壳 -->
+  <g filter="url(#shellShadow)">
+    <path d="M116 350 L152 324 L190 350 L228 324 L256 350 L288 324 L324 350 L362 324 L398 350
+             C398 404 340 428 256 428 C172 428 116 404 116 350 Z" fill="url(#shell)"/>
+    <g clip-path="url(#shellClip)">
+      <rect x="116" y="324" width="282" height="104" fill="url(#shellShade)"/>
+      <path d="M116 392 C 170 404, 342 404, 398 392" fill="none" stroke="#C9D8E2" stroke-width="3" opacity="0.6"/>
+      <path d="M116 414 C 170 424, 342 424, 398 414" fill="none" stroke="#C9D8E2" stroke-width="3" opacity="0.4"/>
+    </g>
+    <path d="M116 350 L152 324 L190 350 L228 324 L256 350 L288 324 L324 350 L362 324 L398 350"
+          fill="none" stroke="#FFFFFF" stroke-opacity="0.95" stroke-width="3" stroke-linejoin="round"/>
+  </g>
+</svg>
