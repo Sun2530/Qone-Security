@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 VSVersionInfo(
   ffi=FixedFileInfo(
-    filevers=(1, 2, 0, 0),
-    prodvers=(1, 2, 0, 0),
+    filevers=(1, 4, 1, 0),
+    prodvers=(1, 4, 1, 0),
     mask=0x3f,
     flags=0x0,
     OS=0x40004,
@@ -17,12 +17,12 @@ VSVersionInfo(
           '080404B0',
           [StringStruct('CompanyName', 'Sun2530'),
            StringStruct('FileDescription', 'Qone Security'),
-           StringStruct('FileVersion', '1.4.0.0'),
+           StringStruct('FileVersion', '1.4.1.0'),
            StringStruct('InternalName', 'QoneSecurity'),
            StringStruct('LegalCopyright', '© 2026 Sun2530'),
            StringStruct('OriginalFilename', 'Qone Security.exe'),
            StringStruct('ProductName', 'Qone Security'),
-           StringStruct('ProductVersion', '1.4.0.0')])
+           StringStruct('ProductVersion', '1.4.1.0')])
       ]),
     VarFileInfo([VarStruct('Translation', [2052, 1200])])
   ]

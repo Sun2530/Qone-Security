@@ -65,9 +65,31 @@ def available() -> bool:
     return pefile is not None
 
 
+# 微软系统目录：这些目录里的文件由微软用「目录签名（catalog）」统一签名，
+# PE 文件里往往没有嵌入证书，常规的 Authenticode 检查认不出来，会被误判成
+# 未签名。而系统资源文件（.dll.mun）天然高熵 + 入口点异常，几乎条条踩中
+# 启发式特征。微软自己签名并维护的系统文件，不该由我们静态启发式去报警。
+_SYS_DIRS = (
+    "\\windows\\systemresources\\",
+    "\\windows\\system32\\",
+    "\\windows\\syswow64\\",
+    "\\windows\\winsxs\\",
+)
+
+
+def _is_microsoft_system(path: str) -> bool:
+    p = os.path.normcase(os.path.normpath(path))
+    return any(d in p for d in _SYS_DIRS)
+
+
 def analyze(path: str, size: int):
     """返回 {score, reasons, verdict} 或 None（不是 PE / 解析失败 / 太大）。"""
     if pefile is None or size <= 0 or size > 48 * 1024 * 1024:
+        return None
+
+    # 微软系统目录下的文件：启发式直接放行，交给哈希 / YARA / clamd 去认。
+    # 这是实机跑出来的教训——SystemResources 里的 .dll.mun 被批量误报成可疑。
+    if _is_microsoft_system(path):
         return None
 
     try:

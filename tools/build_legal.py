@@ -73,7 +73,7 @@ pefile_lic = read(os.path.join(SP, "pefile-2024.8.26.dist-info", "LICENSE"))
 
 HEAD = """Qone Security 第三方组件声明
 ================================================================================
-版本 1.4.0.0 · 2026 · Sun2530
+版本 1.4.1.0 · 2026 · Sun2530
 
 本项目（Qone Security 的界面与检测引擎代码、内置 YARA 规则、内置哈希库）
 以 MIT 许可发布，全文见同目录的 LICENSE.txt。

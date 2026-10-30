@@ -141,7 +141,15 @@ def has_signature(path: str) -> bool:
         return False
     # WinVerifyTrust 只认反斜杠路径，正斜杠会直接判失败
     path = os.path.normpath(path)
-    key = path.lower()
+
+    # 微软系统目录下的文件走「目录签名」，WinVerifyTrust 查嵌入证书必然 False，
+    # 但它们确实是微软签过名的。这里直接按「有签名」处理，
+    # 否则 peheur 的「签名有效扣 35 分」对这些文件形同虚设，批量误报。
+    p = path.lower()
+    if p.startswith("c:\\windows\\"):
+        return True
+
+    key = p
     with _sig_lock:
         if key in _sig_cache:
             return _sig_cache[key]
@@ -357,6 +365,7 @@ class Watch:
                 "name": name,
                 "kind": kind,
                 "pid": pid,
+                "path": path,        # 可执行文件路径，供实时防护做真实检测
             })
         return out
 
@@ -428,7 +437,8 @@ class Watch:
             seen.add(name)
             # 前端只要这几个字段，省得传一堆
             out.append({"id": it["id"], "t": it["t"],
-                        "name": it["name"], "kind": it["kind"]})
+                        "name": it["name"], "kind": it["kind"],
+                        "pid": it.get("pid"), "path": it.get("path", "")})
             if len(out) >= n:
                 break
         return out

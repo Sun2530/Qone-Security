@@ -1252,7 +1252,7 @@
                   <div class="row-n">Qone Security</div>
                   <div class="row-d">界面 + 检测引擎 · MIT 开源</div>
                 </div>
-                <span class="pill">1.4.0.0</span>
+                <span class="pill">1.4.1.0</span>
               </div>
               <div class="row">
                 <div class="row-t">
@@ -2761,6 +2761,7 @@
     const path = hit.p || '';
     const fam = famLabel(hit.fam);
     const why = (hit.why || []).join('、');
+    const pid = hit.pid || al.pid;    // 进程告警的 pid，兼容两种存放位置
 
     rtBusy = true;
     const what = kind === 'proc' ? '进程启动' : '文件写入';
@@ -2778,9 +2779,9 @@
         flash('已允许：' + name);
       } else {
         // 拦截：文件隔离，进程结束
-        if (kind === 'proc' && hit.pid) {
+        if (kind === 'proc' && pid) {
           const a = api();
-          if (a && a.rt_kill) { try { a.rt_kill(hit.pid); } catch (e) {} }
+          if (a && a.rt_kill) { try { a.rt_kill(pid); } catch (e) {} }
           flash('已拦截进程：' + name);
         } else if (path) {
           const a = api();

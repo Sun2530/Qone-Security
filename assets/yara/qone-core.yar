@@ -83,6 +83,10 @@ rule Suspicious_PowerShell_Download_Cradle
         $b64 = "FromBase64String" nocase
     condition:
         filesize < 2MB and
+        /* 有签名的程序不按这个字符串规则报——微软不少系统 DLL
+           （如 Windows.ApplicationModel.Store.dll）里就常驻这些字符串，
+           pe.number_of_signatures 能识别目录签名，把它们排除掉 */
+        pe.number_of_signatures == 0 and
         (
             ($dl and any of ($iex, $ive)) or
             ($ps and $hid and $enc) or
@@ -105,7 +109,9 @@ rule Base64_Encoded_PE_Loader
         $s3 = "eval" nocase
         $s4 = "ActiveXObject" nocase
     condition:
-        filesize < 4MB and $mz and any of ($s*)
+        filesize < 4MB and
+        pe.number_of_signatures == 0 and
+        $mz and any of ($s*)
 }
 
 rule Credential_Dumping_Strings
@@ -166,6 +172,31 @@ rule Ransomware_Note_Text
         any of ($d, $e)
 }
 
+rule Worm_Panda_Burning_Incense
+{
+    meta:
+        description = "熊猫烧香 / 武汉男生 / 威金（Worm.WhBoy、Worm.Win32.Fujack）家族特征串"
+        severity = "high"
+        family = "worm"
+        author = "Sun2530"
+        license = "MIT"
+        reference = "2006 李俊编写，感染 EXE/SCR/PIF/COM 与网页文件，替换图标为烧香熊猫"
+    strings:
+        $xboy  = "xboy" nocase
+        $whboy = "whboy" nocase
+        /* 变异版在文件里写的中文标志，原样匹配 */
+        $cn1 = "武汉男生" ascii
+        $cn2 = "感染下载者" ascii
+        $fj   = "fujack" nocase
+    condition:
+        uint16(0) == 0x5A4D and
+        filesize < 15MB and
+        (
+            (any of ($xboy, $whboy) and any of ($cn1, $cn2)) or
+            $fj
+        )
+}
+
 rule Obfuscated_Script_Loader
 {
     meta:
@@ -181,6 +212,7 @@ rule Obfuscated_Script_Loader
         $a4 = "-join" nocase
     condition:
         filesize < 1MB and
+        pe.number_of_signatures == 0 and
         $a1 and any of ($a2, $a3, $a4)
 }
 

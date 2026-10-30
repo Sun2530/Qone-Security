@@ -12,7 +12,7 @@ import threading
 import time
 import winreg
 
-APP_VERSION = "1.4.0.0"
+APP_VERSION = "1.4.1.0"
 
 APP_DIR_NAME = "Qone Security"
 

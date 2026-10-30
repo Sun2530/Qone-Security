@@ -627,19 +627,41 @@ class Bridge:
     def rt_kill(self, pid):
         return realtime.Realtime.kill_process(pid)
 
-    # 进程启动判定：由界面定时轮询告警时，把 procwatch 的可疑/危险进程转成告警
+    # 进程启动判定：对每个新进程，拿它的可执行文件路径做真实检测，
+    # 而不是只看 procwatch 的路径标签——否则恶意程序放在桌面/下载目录
+    # 会被 classify 判成「正常」而漏掉，放到系统目录更会被判成「系统」漏掉。
     def rt_check_procs(self):
-        """把当前记录里 warn/danger 的新进程转成实时告警（去重）。"""
+        """把新启动的进程拿去过检测管线，命中才告警（去重）。"""
         rows = self.watch.latest(10)
         out = []
         for r in rows:
+            pid = r.get("pid")
+            path = r.get("path") or ""
+            key = (r.get("name"), pid)
+            if key in self._proc_seen:
+                continue
+            self._proc_seen.add(key)
+
+            # 1) 有可执行文件路径就真的扫一遍（哈希/YARA/启发式）
+            hit = None
+            if path and os.path.isfile(path):
+                try:
+                    hit = self.rt.detector.scan_file(path)
+                except Exception:
+                    hit = None
+            if hit:
+                alert = {"kind": "proc", "hit": hit, "t": time.time(),
+                         "pid": pid}
+                self.rt._push(alert)
+                out.append(alert)
+                continue
+
+            # 2) 扫不出（可能是纯脚本/拿不到路径），退回按位置提示：
+            #    从 Temp / Downloads 启动的无签名程序，仍值得问一句
             if r.get("kind") in ("warn", "danger"):
-                key = (r.get("name"), r.get("kind"))
-                if key in self._proc_seen:
-                    continue
-                self._proc_seen.add(key)
-                alert = self.rt.judge_process(r.get("name"), "", r.get("kind"))
+                alert = self.rt.judge_process(r.get("name"), path, r.get("kind"))
                 if alert:
+                    alert["pid"] = pid
                     self.rt._push(alert)
                     out.append(alert)
         return out
