@@ -17,6 +17,20 @@
 - **病毒库自动更新**：规则包通过 GitHub 托管分发，启动时静默检查，三源退让（jsDelivr → raw → Gitee）。
 - **托盘驻留**：关闭窗口最小化到右下角托盘，退出需二次确认。
 
+## 界面预览
+
+主界面 —— 实时防护 + 启动日志：
+
+![主界面](screenshots/main-window.png)
+
+病毒查杀 —— 威胁家族标记 + 隔离确认：
+
+![扫描结果](screenshots/scan-result.png)
+
+隔离区 —— 检出文件集中处置：
+
+![隔离区](screenshots/quarantine.png)
+
 ---
 
 ## 系统要求
